@@ -31,17 +31,17 @@ function! SourceFiles(path, search)
 endfunction
 
 \" Source in all vimc files
-call SourceFiles('/Users/bcasey/Projects/.habitat/dotfiles', '*.vimc')
+call SourceFiles('$dotfiles_dir', '*.vimc')
 
 \" Use Vundle and source .vimp files
-let vundle_readme=expand('/Users/bcasey/.vim/bundle//Vundle.vim/README.md')
+let vundle_readme=expand('$vundle_dir/README.md')
 if filereadable(vundle_readme)
   set rtp+="$vundle_dir"
   call vundle#rc()
 
   \" Let Vundle manage Vundle
   Plugin 'gmarik/Vundle.vim'
-  call SourceFiles('/Users/bcasey/Projects/.habitat/dotfiles', '*.vimp')
+  call SourceFiles('$dotfiles_dir', '*.vimp')
 
 endif
 
