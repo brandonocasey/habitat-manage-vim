@@ -5,7 +5,7 @@ function habitat_brandonocasey_habitat_manage_vim_run() {
   local dotfiles_dir="$1"; shift
   # install vundle in the background if not installed
 
-  local bundle_dir="$HOME/.vim/bundle/"
+  local bundle_dir="$HOME/.vim/bundle"
   local vundle_repo="VundleVim/Vundle.vim"
   local vundle_dir="$bundle_dir/$(basename "$vundle_repo")"
   local vundle_url="https://github.com/$vundle_repo"
@@ -15,9 +15,10 @@ function habitat_brandonocasey_habitat_manage_vim_run() {
   fi
 
   echo "
+
 function! SourceFiles(path, search)
   let path = expand(a:path)
-  let files_found = system('find ' . path . ' -not -type l -name  ' . a:search)
+  let files_found = system(\"find '\" . path . \"' -not -type l -name  '\" . a:search . \"'\")
   if empty(files_found)
     return
   endif
@@ -28,15 +29,15 @@ endfunction
 
 function! AddPlugins(path, search)
   let path = expand(a:path)
-  let files_found = system('find ' . path . ' -not -type l -name  ' . a:search)
+  let files_found = system(\"find '\" . path . \"' -not -type l -name  '\" . a:search . \"'\")
   if empty(files_found)
     return
   endif
-  for FILE in split(files_found, '\\n')
-\"	let plugin_name = system('basename' . FILE)
-	let plugin_name = substitute(fnamemodify(FILE, ':t') , '___', '/', '')
-	let plugin_name = substitute(thing, '.vimp$', '', '')
-    Plugin plugin_name
+  for plugin in split(files_found, '\n')
+    let plugin = fnamemodify(plugin, ':t')
+    let plugin = substitute(plugin, '___', '/', '')
+    let plugin = substitute(plugin, '.vimp', '', '')
+    Plugin plugin
   endfor
 endfunction
 
